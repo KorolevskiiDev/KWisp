@@ -11,10 +11,6 @@
 # Output of the go coverage tool
 *.out
 
-# Dependency directories (optional)
-# go.mod
-# go.sum
-
 # Go workspace file
 *.work
 
@@ -31,7 +27,6 @@ Thumbs.db
 
 # Binary output
 kwisp
-logstore
 
 # Test coverage
 coverage.txt
@@ -41,9 +36,8 @@ tmp
 temp
 *.tmp
 
-# Config files with secrets (optional - uncomment if needed)
-# config.yaml
-# config-*.yaml
-
 # Test data directories
 testdata
+
+# Docker build cache
+.dockerignore

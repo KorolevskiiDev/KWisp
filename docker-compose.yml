@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  kwisp:
+    image: ghcr.io/korolevskiidev/kwisp:latest
+    container_name: kwisp
+    ports:
+      - "8090:8090"
+    environment:
+      - LOGSTORE_SERVER_ADDRESS=:8090
+      - LOGSTORE_STORAGE_DIR=/data
+      - LOGSTORE_STORAGE_CAPACITY=10000
+      - LOGSTORE_ADMIN_TOKEN=admin-secret
+      - LOGSTORE_PUBLIC_ENDPOINT=http://localhost:8090
+    volumes:
+      - kwisp-data:/data
+    restart: unless-stopped
+
+volumes:
+  kwisp-data:

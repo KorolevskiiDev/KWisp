@@ -125,7 +125,7 @@ curl "http://localhost:8090/api/streams/my-app?key=your-api-key"
 
 ## Project Structure
 
-- `cmd/logstore/` - Main entry point
+- `cmd/server/` - Main entry point
 - `internal/bootstrap/` - Dependency wiring
 - `internal/domain/` - Core types
 - `internal/repository/jsonl/` - JSONL persistence

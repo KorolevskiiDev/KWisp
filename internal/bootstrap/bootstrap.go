@@ -38,7 +38,7 @@ func New(args []string) (*App, error) {
 	mux := httptransport.NewRouter(service, cfg.AdminToken)
 	httpSrv := &http.Server{
 		Addr:    cfg.Server.Address,
-		Handler: withCORS(cfg.CORS.Origins, withLogging(mux)),
+		Handler: withLogging(mux),
 	}
 
 	return &App{
@@ -98,41 +98,6 @@ func (s *statusRecorder) Flush() {
 	if f, ok := s.ResponseWriter.(http.Flusher); ok {
 		f.Flush()
 	}
-}
-
-// withCORS allows the dashboard to call the read and SSE endpoints.
-func withCORS(origins []string, next http.Handler) http.Handler {
-	wildcard := false
-	allowed := make(map[string]struct{}, len(origins))
-	for _, o := range origins {
-		if o == "*" {
-			wildcard = true
-			continue
-		}
-		allowed[o] = struct{}{}
-	}
-
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		origin := r.Header.Get("Origin")
-		if origin != "" {
-			_, ok := allowed[origin]
-			if wildcard {
-				w.Header().Set("Access-Control-Allow-Origin", "*")
-			} else if ok {
-				w.Header().Set("Access-Control-Allow-Origin", origin)
-				w.Header().Add("Vary", "Origin")
-			}
-		}
-
-		if r.Method == http.MethodOptions {
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-			w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type")
-			w.WriteHeader(http.StatusNoContent)
-			return
-		}
-
-		next.ServeHTTP(w, r)
-	})
 }
 
 // parseConfigPath extracts the -config flag from the command line.
