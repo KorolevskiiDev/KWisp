@@ -1,0 +1,14 @@
+server:
+  address: ":8090"
+
+storage:
+  dir: /data
+  capacity: 5000
+
+admin_token: dev-admin-token
+
+public_endpoint: http://localhost:8090
+
+cors:
+  origins:
+    - "*"

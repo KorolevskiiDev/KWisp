@@ -1,0 +1,24 @@
+linters-settings:
+  errcheck:
+    check-type-assertions: false
+    exclude-functions:
+      - fmt.Fprint*
+      - fmt.Fprintf*
+      - fmt.Fprintln*
+      - (*net/http.ResponseWriter).Write
+
+linters:
+  disable-all: true
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - revive
+    - staticcheck
+    - unused
+
+revive:
+  rules:
+    - name: var-naming
+      arguments:
+        - ["ID", "API", "URL"]
